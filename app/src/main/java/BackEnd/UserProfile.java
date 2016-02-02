@@ -13,7 +13,7 @@ public class UserProfile {
     private String password;
     private String emailAddress;
 
-    public UserProfile(String name, String userName, String password, String emailAddress){
+    public UserProfile(String name, String userName, String password, String emailAddress) {
         this.name = name;
         this.userName = userName;
         this.password = password;
@@ -48,7 +48,5 @@ public class UserProfile {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
+    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
 }

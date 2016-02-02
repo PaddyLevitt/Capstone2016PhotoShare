@@ -11,13 +11,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.capstone.photoshare.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:clickable="false">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
+    android:clickable="false"
+    android:background="#90898a"
+    android:visibility="visible">
 
     <Button
         android:layout_width="wrap_content"
@@ -25,30 +21,74 @@
         android:text="Login"
         android:id="@+id/loginButton"
         android:onClick="sendMessage"
-        android:layout_below="@+id/userNameText"
+        android:background="#57c7e3"
+        android:textColor="#ffffff"
+        android:textStyle="bold|normal"
+        android:layout_below="@+id/passwordText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="20dp" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/userNameText"
-        android:layout_marginTop="23dp"
-        android:layout_below="@+id/textView"
+        android:hint="@string/user_name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Enter User Name" />
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/passwordText"
+        android:hint="@string/password"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:layout_below="@+id/userNameText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
-        android:hint="Enter Password" />
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:visibility="visible"
+        android:focusableInTouchMode="true"
+        android:background="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="New User? Register Here."
+        android:id="@+id/registerTextView"
+        android:layout_marginTop="95dp"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:clickable="true"
+        android:onClick="launchRegister"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Hello World!"
+        android:id="@+id/textView"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp" />
+
 
 </RelativeLayout>
