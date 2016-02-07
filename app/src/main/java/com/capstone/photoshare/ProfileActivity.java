@@ -1,5 +1,9 @@
 package com.capstone.photoshare;
 
+/* Created by Lee K. Mills.
+ * This class represents the user profile screen
+ */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;

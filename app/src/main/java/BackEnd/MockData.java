@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * This class is for temporary Mock Data for testing purposes only and
  * will be replaced by data from the DB when active.
 */
-public class MockData {
+    public class MockData {
 
     public ArrayList<UserProfile> tempProfileList;
 
