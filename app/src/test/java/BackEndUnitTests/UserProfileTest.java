@@ -1,18 +1,20 @@
 package BackEndUnitTests;
 
 import org.junit.Test;
-
 import BackEnd.UserProfile;
-
 import static org.junit.Assert.*;
 
 /**
  * Created by Lee Mills on 1/25/2016.
- * This class is designed to test the constructor and
- * methods of the UserProfile class.
+ * UserProfile class test
  */
 public class UserProfileTest {
 
+    @Test
+    public void testConstructor() throws Exception {
+        UserProfile instance = new UserProfile("Bill Bobby", "userName", "password", "bbobby@yahoo.com");
+        assertNotNull(instance);
+    }
 
     @Test
     public void testGetName() throws Exception {

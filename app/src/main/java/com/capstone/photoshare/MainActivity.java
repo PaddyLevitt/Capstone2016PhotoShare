@@ -12,10 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import java.util.concurrent.ExecutionException;
 import BackEnd.Login;
 import BackEnd.MockData;
-import BackEnd.WarningDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    //Login button event, will eventually connect to DB
-    public void sendMessage(View view) {
+    //Login button event
+    public void loginButton(View view) {
 
         EditText editText = (EditText) findViewById(R.id.userNameText);
         String userName = editText.getText().toString();
@@ -41,22 +39,11 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
 
         Login login = new Login(userName, password, progressBar);
-        login.execute(); //must be called to execute protected doInBackground method in login class
+        //Login login = new Login(this, progressBar); //Constructor to test phone to node url passing
+        login.execute(); //must be called to execute protected methods in login class
 
-        try {
-            if(login.get()) {//returns boolean result from doInbackground method, will eventually return JSON object or null???
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-                finish();
-            }
-            else {//Dialog box warning when login in incorrect
-                String warning = "The user name or password you entered is incorrect!!";
-                new WarningDialog(this, warning);
-                //progressBar.setVisibility(View.INVISIBLE);
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
+            finish();
 
     }
 

@@ -6,6 +6,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
     <string name="name">Full Name</string>
+    <string name="login">Login</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

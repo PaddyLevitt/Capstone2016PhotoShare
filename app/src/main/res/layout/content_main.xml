@@ -18,9 +18,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:id="@+id/loginButton"
-        android:onClick="sendMessage"
+        android:onClick="loginButton"
         android:background="#57c7e3"
         android:textColor="#ffffff"
         android:textStyle="bold|normal"

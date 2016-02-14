@@ -69,8 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Added User"
-        android:id="@+id/textView2"
+        android:id="@+id/registerMessage"
         android:layout_below="@+id/regiserButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp" />
