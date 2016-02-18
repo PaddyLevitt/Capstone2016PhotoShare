@@ -19,8 +19,8 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
         //Create object
     }
 
-    //Method for testing phone to node url parameter passing (Was successful) (Parsing JSON data should be similar)
-    public String returnUrlParams() {
+    //Method uses url route defined in interface UrlRoutes and returns a string representation of the requested JSON object
+    public String getJSON() {
 
         //Url connection and reader objects
         HttpURLConnection urlConnection = null;
@@ -39,7 +39,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
 
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
 
             if (inputStream == null) {
                 returnParams = "Null input stream";
@@ -49,7 +49,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line);
             }
 
             if (buffer.length() == 0) {

@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * This class is designed to handle login parameters on a background thread.
  */
 
-public class Login extends AsyncTask<Void, Void, Integer> { //AsyncTask provides easy use of threads as to not interrupt main UI thread
+public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides easy use of threads as to not interrupt main UI thread
 
     private String userName;
     private String password;
@@ -28,13 +28,50 @@ public class Login extends AsyncTask<Void, Void, Integer> { //AsyncTask provides
         this.progressBar = progressBar;
     }
 
-    public Login(Context context, ProgressBar progressBar) {//Used to test phone to node with URL no login parameters needed
+    public Login(Context context, ProgressBar progressBar) {//Used to with no login parameters needed
         this.context = context;
         this.progressBar = progressBar;
     }
 
-    @Override //Method executes in Background thread when execute method is called, this method is not called directly
-    protected Integer doInBackground(Void... params) { // Just to test mock data (make sure the AsyncTask 3rd param is Integer)
+    //Method returns string from a JSON object in the background thread
+    protected String doInBackground(Void... params) {
+        ServerRequest serverRequest = new ServerRequest();
+        return serverRequest.getJSON();
+    }
+
+    //Method executes prior to doInBackground, this method is not called directly
+    protected void onPreExecute() {
+        progressBar.setVisibility(View.VISIBLE); //progress bar set visible while waiting on DB response
+    }
+
+    public boolean loginResults(Context context) {
+        boolean loginSuccess = false;
+
+        try {
+            if (this.get() == null || this.get().equals("error")) {//error string is returned from Node.js function
+                String warning = "The user name or password you entered is incorrect!!";
+                new WarningDialog(context, warning);
+            }
+            else {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra("JSONString", this.get());
+                context.startActivity(intent);
+                loginSuccess = true;
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return loginSuccess;
+    }
+
+
+/*    //puts url params onto login screen, no password needed, just a test
+    protected void onPostExecute(String result) {//puts url params onto login screen, no password needed, just a test
+        new WarningDialog(context, result);
+    }*/
+
+    /*    @Override //Just to test mock data (make sure the AsyncTask 3rd param is Integer)
+    protected Integer doInBackground(Void... params) {
         int index = -1;
 
         //MocK Data that is instantiated in Main Activity , search will be on backend server
@@ -43,9 +80,9 @@ public class Login extends AsyncTask<Void, Void, Integer> { //AsyncTask provides
                index =  MainActivity.tempData.tempProfileList.indexOf(temp);
 
         return index;
-    }
-
-    public boolean loginResults(Context context) {//Context is the host Activity calling this method (make sure the AsyncTask 3rd param is Integer)
+    }*/
+      //Just to test mock data (make sure the AsyncTask 3rd param is Integer)
+/*    public boolean loginResults(Context context) {//Context is the host Activity calling this method (make sure the AsyncTask 3rd param is Integer)
         boolean loginSuccess = false;
 
         try {
@@ -63,24 +100,5 @@ public class Login extends AsyncTask<Void, Void, Integer> { //AsyncTask provides
             e.printStackTrace();
         }
         return loginSuccess;
-    }
-
-    //Method executes prior to doInBackground, this method is not called directly
-    protected void onPreExecute() {
-        progressBar.setVisibility(View.VISIBLE); //progress bar set visible while waiting on DB response
-    }
-
-
-    //Methods for testing Phone to Node script passing Url parameters (Was successful) (make sure the AsyncTask 3rd param is String)
-    /*    protected String doInBackground(Void... params) {
-            ServerRequest serverRequest = new ServerRequest();
-            String urlParams = serverRequest.returnUrlParams();
-            return urlParams;
-        }
-
-
-        protected void onPostExecute(String result) {//puts url params onto login screen, no password needed, just a test
-            new WarningDialog(context, result);
-        }*/
-
+    }*/
 }

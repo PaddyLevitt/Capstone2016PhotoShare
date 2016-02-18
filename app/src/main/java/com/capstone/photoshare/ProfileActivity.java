@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ProfileActivity extends AppCompatActivity {
 
     @Override
@@ -23,15 +27,19 @@ public class ProfileActivity extends AppCompatActivity {
         TextView textView2 = (TextView) findViewById(R.id.profileScreenUserName);
         TextView textView3 = (TextView) findViewById(R.id.profileScreenEmail);
 
-        //Just passes the mock data array index for now
+        //Passes string from loginResults function called in main activity
         Intent intent = getIntent();
-        int index = intent.getIntExtra("index", -1);
+        String jsonstr = intent.getStringExtra("JSONString");
 
-        //Displays current user info from mock data array
-        textView1.setText(MainActivity.tempData.tempProfileList.get(index).getName());
-        textView2.setText(MainActivity.tempData.tempProfileList.get(index).getUserName());
-        textView3.setText(MainActivity.tempData.tempProfileList.get(index).getEmailAddress());
+        //Pulling from array for now, will be single object in future
+        try {
+            JSONArray profiles = new JSONArray(jsonstr);
+            JSONObject user = profiles.getJSONObject(0);
+            textView1.setText(user.getString("name"));
+            textView2.setText(user.getString("username"));
+            textView3.setText(user.getString("email"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
-
-
 }
