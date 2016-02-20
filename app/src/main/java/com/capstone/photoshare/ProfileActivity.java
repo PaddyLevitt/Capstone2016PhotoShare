@@ -27,14 +27,13 @@ public class ProfileActivity extends AppCompatActivity {
         TextView textView2 = (TextView) findViewById(R.id.profileScreenUserName);
         TextView textView3 = (TextView) findViewById(R.id.profileScreenEmail);
 
-        //Passes string from loginResults function called in main activity
+        //Passes user profile string from loginResults function called in main activity
         Intent intent = getIntent();
         String jsonstr = intent.getStringExtra("JSONString");
 
-        //Pulling from array for now, will be single object in future
-        try {
-            JSONArray profiles = new JSONArray(jsonstr);
-            JSONObject user = profiles.getJSONObject(0);
+
+        try {//JSON object paramaters displayed on profile screen
+            JSONObject user = new JSONObject(jsonstr);
             textView1.setText(user.getString("name"));
             textView2.setText(user.getString("username"));
             textView3.setText(user.getString("email"));

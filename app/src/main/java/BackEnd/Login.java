@@ -28,15 +28,10 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
         this.progressBar = progressBar;
     }
 
-    public Login(Context context, ProgressBar progressBar) {//Used to with no login parameters needed
-        this.context = context;
-        this.progressBar = progressBar;
-    }
-
     //Method returns string from a JSON object in the background thread
     protected String doInBackground(Void... params) {
-        ServerRequest serverRequest = new ServerRequest();
-        return serverRequest.getJSON();
+        ServerRequest serverRequest = new ServerRequest(userName, password);
+        return serverRequest.getLoginJSON();
     }
 
     //Method executes prior to doInBackground, this method is not called directly
@@ -44,6 +39,7 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
         progressBar.setVisibility(View.VISIBLE); //progress bar set visible while waiting on DB response
     }
 
+    //Checks if login is successful
     public boolean loginResults(Context context) {
         boolean loginSuccess = false;
 
@@ -51,8 +47,9 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
             if (this.get() == null || this.get().equals("error")) {//error string is returned from Node.js function
                 String warning = "The user name or password you entered is incorrect!!";
                 new WarningDialog(context, warning);
+                progressBar.setVisibility(View.INVISIBLE);
             }
-            else {
+            else {//Launches profile screen if login works
                 Intent intent = new Intent(context, ProfileActivity.class);
                 intent.putExtra("JSONString", this.get());
                 context.startActivity(intent);
@@ -65,7 +62,13 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
     }
 
 
-/*    //puts url params onto login screen, no password needed, just a test
+/*
+      public Login(Context context, ProgressBar progressBar) {//Used to with no login parameters for testing
+        this.context = context;
+        this.progressBar = progressBar;
+    }
+
+    //puts url params onto login screen, no password needed, just a test
     protected void onPostExecute(String result) {//puts url params onto login screen, no password needed, just a test
         new WarningDialog(context, result);
     }*/

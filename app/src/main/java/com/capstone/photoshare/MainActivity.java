@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
 
-        //Login login = new Login(userName, password, progressBar);
-        Login login = new Login(this, progressBar); //Constructor to test phone to node url passing
+        Login login = new Login(userName, password, progressBar);
         login.execute(); //must be called to execute protected methods in login class
 
         if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity

@@ -36,24 +36,22 @@ public class RegisterActivity extends AppCompatActivity {
         //Input from text fields
         String name = editText1.getText().toString();
         String userName = editText2.getText().toString();
-        String password= editText3.getText().toString();
+        String password = editText3.getText().toString();
         String confirmPassword = editText4.getText().toString();
         String email = editText5.getText().toString();
 
         //Executes registration in background
         Registration myRegistration = new Registration(name, userName, password, confirmPassword, email);
-        myRegistration.execute();
 
         //Displays registration warning or success message
         if (!myRegistration.generateRegisterWarning(this)) {
             try {
+                myRegistration.execute();
                 TextView textView = (TextView) findViewById(R.id.registerMessage);
                 textView.setText(myRegistration.get());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
-
     }
-
 }

@@ -2,18 +2,16 @@ package BackEnd;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import com.capstone.photoshare.MainActivity;
 
 /**
  * Created by Lee Mills on 2/1/2016.
- * This class is designed to create a new user profile and do some error check prior to trying to push the profile to the DB on a background thread
+ * This class is designed to create a new user profile and do some error check prior to trying to push the profile to the DB on a background threadreturn
  */
 public class Registration extends AsyncTask<Void, Void, String> {
 
     //Represents minimum password length
-    private static final int passwordLength = 2;
+    private static final int passwordLength = 4;
 
-    private UserProfile newProfile;
     private String name;
     private String username;
     private String password;
@@ -26,17 +24,13 @@ public class Registration extends AsyncTask<Void, Void, String> {
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.emailAddress = emailAddress;
-
-        newProfile = new UserProfile(name, username, password, emailAddress);
-        MainActivity.tempData.tempProfileList.add(newProfile); //mock data for now
     }
 
+    //Returns register attempt results
     protected String doInBackground(Void... params) {
 
-        //Code here to connect to DB and push Register object to database
-
-        //mock data for now
-        return "Welcome " + name + " !\n" + "Press back arrow to log in!";
+        ServerRequest serverRequest = new ServerRequest(name, username, password, emailAddress);
+        return serverRequest.pushRegister();
     }
 
     //Checks if password and confirmed password are equal

@@ -1,6 +1,9 @@
 package BackEnd;
 
 import android.util.Log;
+
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,64 +18,118 @@ import java.net.URL;
 
 public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains url routes...."Way..."
 
-    public ServerRequest() {
-        //Create object
+    String name ="";
+    String username = "";
+    String password = "";
+    String email = "";
+
+
+    public ServerRequest(String username, String password) {//Constructor to be used with login class
+        this.username = username;
+        this.password = password;
     }
 
-    //Method uses url route defined in interface UrlRoutes and returns a string representation of the requested JSON object
-    public String getJSON() {
+    public ServerRequest(String name,  String username, String password, String email) {//Constructor to be used with register class
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
-        //Url connection and reader objects
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+    //Push registration parameters to DB, returns status string
+    public String pushRegister() {
+        String status = "";
 
-        String returnParams = "";
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
 
         try {
             // Construct the URL object
-            URL url = new URL(UrlUserList);
+            URL url = new URL(UrlRegister + "?name=" + name + "&username=" + username + "&password=" + password + "&email=" + email);
 
             // Create the request
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuilder buffer = new StringBuilder();
-
-            if (inputStream == null) {
-                returnParams = "Null input stream";
-            }
-
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
-            }
-
-            if (buffer.length() == 0) {
-               returnParams = "buffer length is 0";
-            }
-            returnParams = buffer.toString();
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            status = readStream(in);
 
         } catch (IOException e) {
             Log.e("PlaceholderFragment", "Error ", e);
-            // Something went wrong
-            returnParams = "Catch block : (";
         } finally{
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
-                }
-            }
+        }
+        return status;
+    }
 
-        }return returnParams;
+    //Login returns error or requested JSON object
+    public String getLoginJSON() {
+        String request = "";
+
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
+
+        try {
+            // Construct the URL object
+            URL url = new URL(UrlUserLogin + "?username=" + username + "&password=" + password);
+
+            // Create the request
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            request = readStream(in);
+
+        } catch (IOException e) {
+            Log.e("PlaceholderFragment", "Error ", e);
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return request;
+    }
+
+    //Converts inputStream to a string
+    private String readStream(InputStream inputStream) {
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder buffer = new StringBuilder();
+        String result = "";
+
+        if (inputStream == null) {
+            result = "null";
+        }
+
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
+            }
+            result = buffer.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (buffer.length() == 0) {
+            result = "null";
+        }
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("PlaceholderFragment", "Error closing stream", e);
+        }
+
+        return result;
     }
 }
