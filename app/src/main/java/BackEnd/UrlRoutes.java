@@ -8,6 +8,6 @@ public interface UrlRoutes {
 
     //Urls for Lee Mills local setup
     String myIP = "192.168.1.66"; //Leave empty until testing at home cause this is public on Github.
-    String UrlUserLogin = "http://" + myIP + ":8080/login";
-    String UrlRegister = "http://" + myIP + ":8080/register";
+    String UrlUserLogin = "http://" + myIP + ":8080/users/login";
+    String UrlRegister = "http://" + myIP + ":8080/users/register";
 }
