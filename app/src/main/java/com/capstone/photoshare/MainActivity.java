@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
             finish();
-
     }
 
     //Launches Register screen
