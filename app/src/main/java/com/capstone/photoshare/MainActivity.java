@@ -9,10 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 
-import BackEnd.Login;
 import BackEnd.MockData;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     //Login button event
     public void loginButton(View view) {
 
-        EditText editText = (EditText) findViewById(R.id.userNameText);
+     /*   EditText editText = (EditText) findViewById(R.id.userNameText);
         String userName = editText.getText().toString();
 
         EditText editText2 = (EditText) findViewById(R.id.passwordText);
@@ -42,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         login.execute(); //must be called to execute protected methods in login class
 
         if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
-            finish();
+            finish();*/
+
+        //Temp to show gridview of thumbnails
+        Intent intent = new Intent(this, PictureGridActivity.class);
+        startActivity(intent);
     }
 
     //Launches Register screen

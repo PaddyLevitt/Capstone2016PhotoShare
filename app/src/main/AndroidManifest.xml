@@ -38,7 +38,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.capstone.photoshare.MainActivity" />
         </activity>
-        <activity android:name=".ShowPictureActivity"></activity>
+        <activity android:name=".ShowPictureActivity" />
+        <activity android:name=".PictureGridActivity"></activity>
     </application>
 
 </manifest>
