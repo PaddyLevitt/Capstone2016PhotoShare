@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
             finish();*/
 
-        //Temp to show gridview of thumbnails
-        Intent intent = new Intent(this, PictureGridActivity.class);
+        //Bypass login function to test other features
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 

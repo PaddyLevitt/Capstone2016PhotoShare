@@ -15,7 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ProfileActivity extends AppCompatActivity {
+import BackEnd.UrlRoutes;
+
+public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     //Passes URL to ShowPictureActivity and starts the activity
     public void showPhotos(View view) {
         Intent intent = new Intent(this, ShowPictureActivity.class);
-        intent.putExtra("URL", "https://placeholdit.imgix.net/~text?txtsize=18&txt=image&w=120&h=120"); ////test url off web
+        intent.putExtra("URL", UrlPic + "?objID=56d4da380ce7c34dc33a5753");//Hardcoded objID to test showing a picture for now
         startActivity(intent);
     }
 }

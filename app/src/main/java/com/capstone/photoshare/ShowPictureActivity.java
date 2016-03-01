@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ShowPictureActivity extends AppCompatActivity {
@@ -16,6 +17,7 @@ public class ShowPictureActivity extends AppCompatActivity {
     //ImageView and drawable objects
     private ImageView imageView;
     private Drawable drawable;
+    private String urlString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class ShowPictureActivity extends AppCompatActivity {
 
         //Pulls in URL string from calling activity
         Intent intent = getIntent();
-        String urlString = intent.getStringExtra("URL");
+        urlString = intent.getStringExtra("URL");
 
         //Passes url and performs private class methods
         getPicFromUrl picture = new getPicFromUrl(urlString);
@@ -40,17 +42,27 @@ public class ShowPictureActivity extends AppCompatActivity {
 
     //Class obtains drawable from URL and posts to imageview
     private class getPicFromUrl extends AsyncTask<Void, Void, Drawable> {
-        String url;
 
         public getPicFromUrl(String  url) {
-            this.url = url;
+           urlString = url;
         }
 
         protected Drawable doInBackground(Void... params) {//returns drawable from url stream on background thread
+            HttpURLConnection  urlConnection;
+            URL url;
 
             try {
-                InputStream is = (InputStream) new URL(url).getContent();
+
+                //DB connection
+                url = new URL(urlString);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                //Stream from DB to drawable object
+                InputStream is = urlConnection.getInputStream();
                 drawable = Drawable.createFromStream(is, "src");
+
             } catch (Exception e) {
                 drawable = null;
             }
