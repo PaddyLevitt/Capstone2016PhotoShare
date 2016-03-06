@@ -39,7 +39,8 @@
                 android:value="com.capstone.photoshare.MainActivity" />
         </activity>
         <activity android:name=".ShowPictureActivity" />
-        <activity android:name=".PictureGridActivity"></activity>
+        <activity android:name=".PictureGridActivity" />
+        <activity android:name=".TestOutput"></activity>
     </application>
 
 </manifest>

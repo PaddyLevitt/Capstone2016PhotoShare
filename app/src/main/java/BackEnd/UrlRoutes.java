@@ -11,4 +11,5 @@ public interface UrlRoutes {
     String UrlUserLogin = "http://" + myIP + ":8080/users/login";
     String UrlRegister = "http://" + myIP + ":8080/users/register";
     String UrlPic = "http://" + myIP + ":8080/users/picToApp";
+    String Urlcollection = "http://" + myIP + ":8080/collection";//Route will be changed later to match server
 }

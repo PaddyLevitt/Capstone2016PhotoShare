@@ -48,8 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
 
     //Passes URL to ShowPictureActivity and starts the activity
     public void showPhotos(View view) {
-        Intent intent = new Intent(this, ShowPictureActivity.class);
-        intent.putExtra("URL", UrlPic + "?objID=56d4da380ce7c34dc33a5753");//Hardcoded objID to test showing a picture for now
+        Intent intent = new Intent(this, PictureGridActivity.class);
         startActivity(intent);
     }
 }

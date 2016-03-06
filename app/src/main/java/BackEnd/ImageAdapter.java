@@ -1,27 +1,29 @@
 package BackEnd;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.capstone.photoshare.R;
-
 /**
  * Created by Lee K. Mills on 2/28/2016.
- * This class will evolve to a dynamic adapter to show user picture thumbnails in a gridview from cache
+ * This class shows user picture thumbnails in a gridview
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private Drawable[] pics;
 
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, Drawable[] d) {
         mContext = c;
+        pics = d;
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return pics.length;
     }
 
     public Object getItem(int position) {
@@ -33,6 +35,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     // create a new ImageView for each item referenced by the Adapter
+    @SuppressWarnings("deprecation")
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
@@ -45,22 +48,12 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[position]);
+        if(Build.VERSION.SDK_INT >= 16)
+            imageView.setBackground(pics[position]);
+        else
+            imageView.setBackgroundDrawable(pics[position]);
+
+        //imageView.setImageResource(pics[position]);
         return imageView;
     }
-
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
 }

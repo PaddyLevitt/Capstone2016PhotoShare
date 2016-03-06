@@ -3,6 +3,8 @@ package BackEnd;
 import android.util.Log;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
     String username = "";
     String password = "";
     String email = "";
+    String collection = "";
 
 
     public ServerRequest(String username, String password) {//Constructor to be used with login class
@@ -34,6 +37,10 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public ServerRequest (String collection) {//Constructor to be used with PictureGridActivity class
+        this.collection = collection; //This will be the name of the collection to return
     }
 
     //Push registration parameters to DB, returns status string
@@ -96,6 +103,38 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
             }
         }
         return request;
+    }
+
+    //Returns JSONArray of a collection
+    public JSONArray getCollection() {
+        JSONArray collection = null;
+
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
+
+        try {
+            // Construct the URL object
+            URL url = new URL(Urlcollection);//Will need parameters of different collection names to be added to URL eventually
+
+            // Create the request
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            String jsonArray = readStream(in);
+            collection = new JSONArray(jsonArray);
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return collection;
     }
 
     //Converts inputStream to a string
