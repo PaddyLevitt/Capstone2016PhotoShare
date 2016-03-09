@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 /**
  * Created by Lee Mills on 2/1/2016.
- * This class is designed to create a new user profile and do some error check prior to trying to push the profile to the DB on a background threadreturn
+ * This class is designed to create a new user profile and do some error checking prior to trying to push the profile to the DB
  */
 public class Registration extends AsyncTask<Void, Void, String> {
 

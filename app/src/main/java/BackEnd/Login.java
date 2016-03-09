@@ -1,12 +1,10 @@
 package BackEnd;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import com.capstone.photoshare.MainActivity;
 import com.capstone.photoshare.ProfileActivity;
 import java.util.concurrent.ExecutionException;
 
@@ -20,7 +18,6 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
     private String userName;
     private String password;
     private ProgressBar progressBar;
-    private Context context;
 
     public Login(String userName, String password, ProgressBar progressBar) {
         this.userName = userName;
@@ -34,7 +31,7 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
         return serverRequest.getLoginJSON();
     }
 
-    //Method executes prior to doInBackground, this method is not called directly
+    //Method executes prior to doInBackground
     protected void onPreExecute() {
         progressBar.setVisibility(View.VISIBLE); //progress bar set visible while waiting on DB response
     }
@@ -49,7 +46,7 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
                 new WarningDialog(context, warning);
                 progressBar.setVisibility(View.INVISIBLE);
             }
-            else {//Launches profile screen if login works
+            else {//Launches profile screen if login works and passes JSON object string to ProfileActivity
                 Intent intent = new Intent(context, ProfileActivity.class);
                 intent.putExtra("JSONString", this.get());
                 context.startActivity(intent);
@@ -60,48 +57,4 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
         }
         return loginSuccess;
     }
-
-
-/*
-      public Login(Context context, ProgressBar progressBar) {//Used to with no login parameters for testing
-        this.context = context;
-        this.progressBar = progressBar;
-    }
-
-    //puts url params onto login screen, no password needed, just a test
-    protected void onPostExecute(String result) {//puts url params onto login screen, no password needed, just a test
-        new WarningDialog(context, result);
-    }*/
-
-    /*    @Override //Just to test mock data (make sure the AsyncTask 3rd param is Integer)
-    protected Integer doInBackground(Void... params) {
-        int index = -1;
-
-        //MocK Data that is instantiated in Main Activity , search will be on backend server
-        for(UserProfile temp : MainActivity.tempData.tempProfileList)
-            if (userName.equals(temp.getUserName()) && password.equals(temp.getPassword()))
-               index =  MainActivity.tempData.tempProfileList.indexOf(temp);
-
-        return index;
-    }*/
-      //Just to test mock data (make sure the AsyncTask 3rd param is Integer)
-/*    public boolean loginResults(Context context) {//Context is the host Activity calling this method (make sure the AsyncTask 3rd param is Integer)
-        boolean loginSuccess = false;
-
-        try {
-            if (this.get() != -1) {//returns result from doInbackground method, will eventually return JSON object or null???
-                Intent intent = new Intent(context, ProfileActivity.class);
-                intent.putExtra("index", this.get());//temp code to pass mock data array index to ProfileActivity
-                context.startActivity(intent);
-                loginSuccess = true;
-            }
-            else {//Dialog box warning when login in incorrect
-                String warning = "The user name or password you entered is incorrect!!";
-                new WarningDialog(context, warning);
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return loginSuccess;
-    }*/
 }

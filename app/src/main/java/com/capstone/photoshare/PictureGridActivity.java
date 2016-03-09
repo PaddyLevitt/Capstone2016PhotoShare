@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,24 +26,30 @@ import BackEnd.UrlRoutes;
 public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     private Drawable[] drawable;
     private JSONArray jsonArray;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture_grid);
 
+        //Grabs username from calling activity
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+
         getPicFromUrl pic = new getPicFromUrl();
         pic.execute();
 
         try {
-            drawable = pic.get();
+            drawable = pic.get();//Sets drawable array to array returned by private class method
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this, drawable));
+        gridview.setAdapter(new ImageAdapter(this, drawable));//pass array to gridview adapter
 
+        //Show large picture of thumbnail click
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -67,11 +72,11 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
         String urlString = "";
         JSONObject jsonObject = null;
 
-        protected Drawable[] doInBackground(Void... params) {//returns drawable from url stream on background thread
+        protected Drawable[] doInBackground(Void... params) {//returns drawable array
             HttpURLConnection urlConnection;
             URL url;
 
-            ServerRequest sr = new ServerRequest("collectionName");// collection name to be more specific soon
+            ServerRequest sr = new ServerRequest(username + "Images");//Name of collection to request username is unique identifier
             jsonArray = sr.getCollection();
             Drawable pics[] = new Drawable[jsonArray.length()];
 

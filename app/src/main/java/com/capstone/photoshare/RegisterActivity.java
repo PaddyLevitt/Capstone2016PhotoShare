@@ -40,13 +40,13 @@ public class RegisterActivity extends AppCompatActivity {
         String confirmPassword = editText4.getText().toString();
         String email = editText5.getText().toString();
 
-        //Executes registration in background
+        //Create registration object
         Registration myRegistration = new Registration(name, userName, password, confirmPassword, email);
 
         //Displays registration warning or success message
         if (!myRegistration.generateRegisterWarning(this)) {
             try {
-                myRegistration.execute();
+                myRegistration.execute();//Performs registration in background
                 TextView textView = (TextView) findViewById(R.id.registerMessage);
                 textView.setText(myRegistration.get());
             } catch (InterruptedException | ExecutionException e) {

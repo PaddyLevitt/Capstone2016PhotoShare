@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 /**
  * Created by Lee Mills on 2/6/2016.
- * This class is created to use to same alert dialog format throughout the app
+ * This class is created to use the same alert dialog format throughout the app
  */
 public class WarningDialog extends AlertDialog.Builder {
 

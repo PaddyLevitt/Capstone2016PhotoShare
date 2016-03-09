@@ -1,8 +1,6 @@
 package BackEnd;
 
 import android.util.Log;
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.BufferedInputStream;
@@ -18,7 +16,7 @@ import java.net.URL;
  * Class for connection to the server
  */
 
-public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains url routes...."Way..."
+public class ServerRequest implements UrlRoutes{
 
     String name ="";
     String username = "";
@@ -107,7 +105,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
 
     //Returns JSONArray of a collection
     public JSONArray getCollection() {
-        JSONArray collection = null;
+        JSONArray coll = null;
 
         //Url connection and input stream objects
         HttpURLConnection  urlConnection = null;
@@ -115,7 +113,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
 
         try {
             // Construct the URL object
-            URL url = new URL(Urlcollection);//Will need parameters of different collection names to be added to URL eventually
+            URL url = new URL(Urlcollection + "?collection=" + collection);
 
             // Create the request
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -125,7 +123,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
             //Construct and pass input stream
             in = new BufferedInputStream(urlConnection.getInputStream());
             String jsonArray = readStream(in);
-            collection = new JSONArray(jsonArray);
+            coll = new JSONArray(jsonArray);
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -134,7 +132,7 @@ public class ServerRequest implements UrlRoutes{//Interface UrlRoutes contains u
                 urlConnection.disconnect();
             }
         }
-        return collection;
+        return coll;
     }
 
     //Converts inputStream to a string
