@@ -26,7 +26,7 @@ import BackEnd.UrlRoutes;
 public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     private Drawable[] drawable;
     private JSONArray jsonArray;
-    private String username;
+    private String picCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
 
         //Grabs username from calling activity
         Intent intent = getIntent();
-        username = intent.getStringExtra("username");
+        picCollection = intent.getStringExtra("username") + "Images";
 
         getPicFromUrl pic = new getPicFromUrl();
         pic.execute();
@@ -57,8 +57,8 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
 
                 try {
                     JSONObject jsonObject = (JSONObject)jsonArray.get(position);
-                    String path = jsonObject.getString("_id");
-                    intent.putExtra("URL", UrlPic + "?objID=" + path);
+                    String objID = jsonObject.getString("_id");
+                    intent.putExtra("URL", UrlPic + "?objID=" + objID + "&collection=" + picCollection);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -76,14 +76,14 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
             HttpURLConnection urlConnection;
             URL url;
 
-            ServerRequest sr = new ServerRequest(username + "Images");//Name of collection to request username is unique identifier
+            ServerRequest sr = new ServerRequest(picCollection);//Name of collection to request username is unique identifier
             jsonArray = sr.getCollection();
             Drawable pics[] = new Drawable[jsonArray.length()];
 
             for (int i = 0; i < pics.length; i++) {
                 try {
                     jsonObject = (JSONObject) jsonArray.get(i);
-                    urlString = UrlPic + "?objID=" + jsonObject.getString("_id");
+                    urlString = UrlPic + "?objID=" + jsonObject.getString("_id") + "&collection=" + picCollection;
 
                     //DB connection
                     url = new URL(urlString);
