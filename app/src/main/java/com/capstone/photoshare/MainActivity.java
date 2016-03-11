@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import BackEnd.Login;
 import BackEnd.MockData;
+import BackEnd.WarningDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,13 +36,19 @@ public class MainActivity extends AppCompatActivity {
         EditText editText2 = (EditText) findViewById(R.id.passwordText);
         String password = editText2.getText().toString();
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
+        if(userName.equals("") || password.equals("")) {//Check for blank fields before doing server requests
+            String warning = "The user name or password you entered is incorrect!!";
+            new WarningDialog(this, warning);
+        }
+        else {
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
 
-        Login login = new Login(userName, password, progressBar);
-        login.execute(); //must be called to execute protected methods in login class
+            Login login = new Login(userName, password, progressBar);
+            login.execute(); //must be called to execute protected methods in login class
 
-        if(login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
-            finish();
+            if (login.loginResults(this))//if login is successful close this activity and proceed to ProfileActivity
+                finish();
+        }
     }
 
     //Launches Register screen
