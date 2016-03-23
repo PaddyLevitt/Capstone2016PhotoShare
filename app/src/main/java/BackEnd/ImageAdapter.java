@@ -8,18 +8,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.view.LayoutInflater;
+import com.capstone.photoshare.R;
 
 /**
  * Created by Lee K. Mills on 2/28/2016.
  * This class shows user picture thumbnails in a gridview
  */
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private Drawable[] pics;
+    private LayoutInflater layoutInflater;
 
     public ImageAdapter(Context c, Drawable[] d) {
         mContext = c;
         pics = d;
+        layoutInflater = LayoutInflater.from(mContext);
     }
 
     public int getCount() {
@@ -27,33 +33,37 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return null;
+        return pics[position];
     }
 
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     // create a new ImageView for each item referenced by the Adapter
     @SuppressWarnings("deprecation")
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        View grid;
+
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
+            grid = layoutInflater.inflate(R.layout.imageview_textview, null);
+            grid.setLayoutParams(new GridView.LayoutParams(150, 150));
+        } else
+            grid = convertView;
 
-        if(Build.VERSION.SDK_INT >= 16)
-            imageView.setBackground(pics[position]);
-        else
+        if (Build.VERSION.SDK_INT >= 16) {
+            ImageView imageView = (ImageView) grid.findViewById(R.id.image);
             imageView.setBackgroundDrawable(pics[position]);
-
-        //imageView.setImageResource(pics[position]);
-        return imageView;
+            TextView textView = (TextView) grid.findViewById(R.id.name);
+            textView.setText(String.valueOf(position));
+        }
+        else {
+            ImageView imageView = (ImageView) grid.findViewById(R.id.image);
+            imageView.setBackgroundDrawable(pics[position]);
+            TextView textView = (TextView) grid.findViewById(R.id.name);
+            textView.setText(String.valueOf(position + 1));
+        }
+        return grid;
     }
+
 }

@@ -40,7 +40,8 @@
         </activity>
         <activity android:name=".ShowPictureActivity" />
         <activity android:name=".PictureGridActivity" />
-        <activity android:name=".TestOutput"></activity>
+        <activity android:name=".TestOutput" />
+        <activity android:name=".PhotoAlbumActivity"></activity>
     </application>
 
 </manifest>
