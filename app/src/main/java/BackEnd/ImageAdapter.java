@@ -55,7 +55,7 @@ public class ImageAdapter extends BaseAdapter {
             ImageView imageView = (ImageView) grid.findViewById(R.id.image);
             imageView.setBackgroundDrawable(pics[position]);
             TextView textView = (TextView) grid.findViewById(R.id.name);
-            textView.setText(String.valueOf(position));
+            textView.setText(String.valueOf(position + 1));
         }
         else {
             ImageView imageView = (ImageView) grid.findViewById(R.id.image);

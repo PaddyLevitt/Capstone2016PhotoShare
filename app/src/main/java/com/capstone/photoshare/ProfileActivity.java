@@ -46,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
     //Passes username to PictureGridActivity
     public void showPhotos(View view) {
         TextView textView = (TextView) findViewById(R.id.profileScreenUserName);
-        Intent intent = new Intent(this, PictureGridActivity.class);
+        Intent intent = new Intent(this, PhotoAlbumActivity.class);
         intent.putExtra("username", textView.getText());
         startActivity(intent);
     }

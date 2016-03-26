@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,11 +35,7 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
 
         //Grabs username from calling activity
         Intent intent = getIntent();
-        picCollection = intent.getStringExtra("username") + "Images";
-
-        //Add name of user's pics being shown to top corner of gridview
-        TextView user = (TextView)findViewById(R.id.userPics);
-        user.setText(intent.getStringExtra("username") + "'s" + " pics");
+        picCollection = intent.getStringExtra("collection");
 
         getPicFromUrl pic = new getPicFromUrl();
         pic.execute();
