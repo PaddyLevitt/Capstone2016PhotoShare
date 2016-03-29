@@ -38,25 +38,27 @@ public class PhotoAlbumActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ListView listView = (ListView) findViewById(R.id.albumListView);
-        listView.setAdapter(new PhotoAlbumAdapter(this, jsonArray));
+        if (!jsonArray.isNull(0)) {
+            ListView listView = (ListView) findViewById(R.id.albumListView);
+            listView.setAdapter(new PhotoAlbumAdapter(this, jsonArray));
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
 
-                Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
+                    Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
 
-                try {
-                    String collection = jsonArray.getJSONObject(position).getString("collection");
-                    intent.putExtra("collection", collection);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    try {
+                        String collection = jsonArray.getJSONObject(position).getString("collection");
+                        intent.putExtra("collection", collection);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private class userAlbums extends AsyncTask<Void, Void, JSONArray> {
@@ -68,6 +70,12 @@ public class PhotoAlbumActivity extends AppCompatActivity {
             jsonArray = sr.getCollection();
 
             return jsonArray;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray.isNull(0))
+                setContentView(R.layout.blank_album_list);
         }
     }
 }
