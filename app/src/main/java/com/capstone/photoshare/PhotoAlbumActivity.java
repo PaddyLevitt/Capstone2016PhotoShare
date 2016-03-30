@@ -61,6 +61,18 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         }
     }
 
+    public void createAnotherAlbum(View view) {
+        Intent intent = new Intent(this, TestOutput.class);
+        intent.putExtra("message", "Another Album");
+        startActivity(intent);
+    }
+
+    public void createFirstAlbum(View view) {
+        Intent intent = new Intent(this, TestOutput.class);
+        intent.putExtra("message", "First Album");
+        startActivity(intent);
+    }
+
     private class userAlbums extends AsyncTask<Void, Void, JSONArray> {
         private JSONArray jsonArray;
 

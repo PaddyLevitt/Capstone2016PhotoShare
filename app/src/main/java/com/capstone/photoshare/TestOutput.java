@@ -1,5 +1,6 @@
 package com.capstone.photoshare;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,30 +21,10 @@ public class TestOutput extends AppCompatActivity implements UrlRoutes{//Class j
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_output);
 
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("message");
+
         TextView textView = (TextView) findViewById(R.id.testOutput);
-        ServerStuff st = new ServerStuff();
-        st.execute();
-
-        JSONArray jsonArray;
-
-        try {
-            jsonArray = st.get();
-            JSONObject jsonObject = (JSONObject) jsonArray.get(5);
-            String id = UrlPic + "?objID=" + jsonObject.getString("_id");
-            textView.setText(id);
-
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private class ServerStuff extends AsyncTask <Void, Void, JSONArray> {
-
-        @Override
-        protected JSONArray doInBackground(Void... params) {
-            ServerRequest sr = new ServerRequest("nothing");
-            return  sr.getCollection();
-        }
+        textView.setText(message);
     }
 }

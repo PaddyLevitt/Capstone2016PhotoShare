@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="No albums to view yet, let&apos;s create one!"
-    android:gravity="center"
-    android:visibility="visible"
-    android:textSize="50dp"
-    android:textColor="#758af9">
+    android:layout_height="wrap_content">
 
-</TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="401dp"
+        android:text="No albums to view yet, let&apos;s create one!"
+        android:gravity="center"
+        android:visibility="visible"
+        android:textSize="50dp"
+        android:textColor="#758af9"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CREATE ALBUM"
+        android:id="@+id/createFirstAlbum"
+        android:layout_gravity="center_horizontal"
+        android:onClick="createFirstAlbum" />
+
+</LinearLayout>

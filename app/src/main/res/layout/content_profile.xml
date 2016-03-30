@@ -16,9 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="PROFILE INFORMATION"
+        android:text="MY PROFILE "
         android:id="@+id/textView3"
-        android:layout_above="@+id/textView"
+        android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:text="Name:"
-        android:layout_marginBottom="24dp"
         android:layout_above="@+id/textView4"
         android:layout_toLeftOf="@+id/button2"
         android:layout_toStartOf="@+id/button2" />
@@ -46,9 +45,8 @@
         android:text="Email:"
         android:id="@+id/textView5"
         android:layout_below="@+id/textView4"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_marginTop="23dp" />
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,15 +54,17 @@
         android:text="Undefined"
         android:id="@+id/profileScreenName"
         android:layout_alignTop="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Undefined"
         android:id="@+id/profileScreenUserName"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/profileScreenName"
+        android:layout_alignLeft="@+id/profileScreenName"
+        android:layout_alignStart="@+id/profileScreenName" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:text="Edit Profile"
         android:id="@+id/button"
+        android:layout_marginTop="24dp"
         android:layout_below="@+id/profileScreenEmail"
         android:layout_centerHorizontal="true" />
 
@@ -88,30 +89,27 @@
         android:layout_height="wrap_content"
         android:text="View/Edit Albums"
         android:id="@+id/button2"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true"
         android:clickable="true"
-        android:onClick="showPhotos" />
+        android:onClick="showPhotos"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
         android:id="@+id/imageView2"
-        android:layout_alignParentTop="true"
         android:background="@drawable/logo"
-        android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Friends List"
         android:id="@+id/button4"
+        android:singleLine="true"
         android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:singleLine="true" />
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button" />
 
 </RelativeLayout>
