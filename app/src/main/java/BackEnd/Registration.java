@@ -38,6 +38,16 @@ public class Registration extends AsyncTask<Void, Void, String> {
         return password.equals(confirmPassword) && !password.equals("") && !confirmPassword.equals("");
     }
 
+    //Checks for spaces in userName
+    private boolean userNameHasSpaces() {
+        return username.contains(" ");
+    }
+
+    //Checks for spaces in Password
+    private boolean passwordHasSpaces() {
+        return password.contains(" ");
+    }
+
     //Checks if password meets minimum length set in static variable
     private boolean passwordLength() {
         return password.length() < passwordLength;
@@ -51,9 +61,9 @@ public class Registration extends AsyncTask<Void, Void, String> {
     //Checks if email format is correct
     private boolean emailFormat () {
         //This top line of code works on app, but breaks unit test for some reason
-        //return emailAddress != null && android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches();
+        return emailAddress != null && android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches();
 
-        return emailAddress != null && emailAddress.contains("@") && emailAddress.contains(".com");//this code and unit test are friends
+       // return emailAddress != null && emailAddress.contains("@") && emailAddress.contains(".com");//this code and unit test are friends
     }
 
     /*
@@ -64,6 +74,16 @@ public class Registration extends AsyncTask<Void, Void, String> {
 
         if (fullFields()) {
             String warning = "Name and User Name are Required!!";
+            new WarningDialog(context, warning);
+            return true;
+        }
+        else if (userNameHasSpaces()) {
+            String warning = "User Name cannot contain spaces!!";
+            new WarningDialog(context, warning);
+            return true;
+        }
+        else if (passwordHasSpaces()) {
+            String warning = "Password cannot contain spaces!!";
             new WarningDialog(context, warning);
             return true;
         }
@@ -85,7 +105,4 @@ public class Registration extends AsyncTask<Void, Void, String> {
         else
             return false;
     }
-
-
-
 }

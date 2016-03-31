@@ -14,6 +14,11 @@ import java.util.concurrent.ExecutionException;
 import BackEnd.Registration;
 
 public class RegisterActivity extends AppCompatActivity {
+    private String name;
+    private String userName;
+    private String password;
+    private String confirmPassword;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     public void registerButton(View view) {
 
         //Text fields
@@ -34,13 +40,15 @@ public class RegisterActivity extends AppCompatActivity {
         EditText editText5 = (EditText) findViewById(R.id.email);
 
         //Input from text fields
-        String name = editText1.getText().toString();
-        String userName = editText2.getText().toString();
-        String password = editText3.getText().toString();
-        String confirmPassword = editText4.getText().toString();
-        String email = editText5.getText().toString();
+        name = editText1.getText().toString();
+        userName = editText2.getText().toString();
+        password = editText3.getText().toString();
+        confirmPassword = editText4.getText().toString();
+        email = editText5.getText().toString();
+
 
         //Create registration object
+        formatFullName();
         Registration myRegistration = new Registration(name, userName, password, confirmPassword, email);
 
         //Displays registration warning or success message
@@ -53,5 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    //Replaces spaces with '+' in register fields so URL parameters are passed to DB correctly
+    private void formatFullName() {
+        this.name = name.replace(' ', '+');
     }
 }

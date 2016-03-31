@@ -11,16 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-
-import java.io.InputStream;
-
 import BackEnd.Login;
-import BackEnd.MockData;
 import BackEnd.WarningDialog;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static MockData tempData = new MockData(); //temp mock data for testing until DB is active
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             ProgressBar progressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
-
             Login login = new Login(userName, password, progressBar);
             login.execute(); //must be called to execute protected methods in login class
 
