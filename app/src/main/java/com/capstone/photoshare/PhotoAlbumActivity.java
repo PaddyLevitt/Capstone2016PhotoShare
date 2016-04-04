@@ -4,31 +4,44 @@ package com.capstone.photoshare;
  * This class represents the user photo albums listview
  */
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.concurrent.ExecutionException;
 import BackEnd.PhotoAlbumAdapter;
 import BackEnd.ServerRequest;
+import BackEnd.WarningDialog;
 
 public class PhotoAlbumActivity extends AppCompatActivity {
     private String albumCollection;
     private JSONArray jsonArray;
+    private String newAlbumName;
+    private String username;
+    private String collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_album);
 
         Intent intent = getIntent();
-        albumCollection = intent.getStringExtra("username") + "Albums";
+        username = intent.getStringExtra("username");
+        albumCollection = username + "Albums";
 
+        loadAdapter();
+    }
+
+    private void loadAdapter() {
+        setContentView(R.layout.activity_photo_album);
         userAlbums albums = new userAlbums();
         albums.execute();
 
@@ -47,7 +60,8 @@ public class PhotoAlbumActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
 
-                    Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
+                    //Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
+                    Intent intent = new Intent(PhotoAlbumActivity.this, TestOutput.class);//Temp testing for now
 
                     try {
                         String collection = jsonArray.getJSONObject(position).getString("collection");
@@ -61,16 +75,61 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         }
     }
 
+    protected void showAddALbumDialog() {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(PhotoAlbumActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.add_album_dialog, null);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PhotoAlbumActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.enterAlbumName);
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        newAlbumName = editText.getText().toString();
+                        collection = createCollectionName(newAlbumName);
+                        newAlbumName = formatNewAlbumName(newAlbumName);
+                        addAlbum album = new addAlbum();
+                        album.execute();
+
+                        try {
+                            if (album.get().equals("success")) {
+                                loadAdapter();
+                                new WarningDialog(PhotoAlbumActivity.this, "Album creation successful!");
+                            }
+                            else
+                                new WarningDialog(PhotoAlbumActivity.this, album.get());
+
+                        } catch (InterruptedException | ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
     public void createAnotherAlbum(View view) {
-        Intent intent = new Intent(this, TestOutput.class);
-        intent.putExtra("message", "Another Album");
-        startActivity(intent);
+        showAddALbumDialog();
+    }
+
+    private String formatNewAlbumName(String name) {
+        return name.replace(' ', '+');
+    }
+
+    private String createCollectionName(String name) {
+        return name.replace(' ', '_');
     }
 
     public void createFirstAlbum(View view) {
-        Intent intent = new Intent(this, TestOutput.class);
-        intent.putExtra("message", "First Album");
-        startActivity(intent);
+        showAddALbumDialog();
     }
 
     private class userAlbums extends AsyncTask<Void, Void, JSONArray> {
@@ -90,4 +149,17 @@ public class PhotoAlbumActivity extends AppCompatActivity {
                 setContentView(R.layout.blank_album_list);
         }
     }
+
+    private class addAlbum extends AsyncTask<Void, Void, String> {
+
+        protected String doInBackground(Void... params) {
+            String result;
+
+            ServerRequest sr = new ServerRequest(newAlbumName, username, collection);
+            result = sr.pushNewAlbum();
+
+            return result;
+        }
+    }
+
 }

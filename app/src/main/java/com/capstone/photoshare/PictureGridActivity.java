@@ -76,7 +76,7 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
             HttpURLConnection urlConnection;
             URL url;
 
-            ServerRequest sr = new ServerRequest(picCollection);//Name of collection to request username is unique identifier
+            ServerRequest sr = new ServerRequest(picCollection);
             jsonArray = sr.getCollection();
             Drawable pics[] = new Drawable[jsonArray.length()];
 

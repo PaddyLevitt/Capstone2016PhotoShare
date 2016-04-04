@@ -18,11 +18,12 @@ import java.net.URL;
 
 public class ServerRequest implements UrlRoutes{
 
-    String name ="";
-    String username = "";
-    String password = "";
-    String email = "";
-    String collection = "";
+    private String name;
+    private String username;
+    private String password;
+    private String email;
+    private String collection;
+    private String albumName;
 
 
     public ServerRequest(String username, String password) {//Constructor to be used with login class
@@ -39,6 +40,43 @@ public class ServerRequest implements UrlRoutes{
 
     public ServerRequest (String collection) {//Constructor to be used with PictureGridActivity class
         this.collection = collection; //This will be the name of the collection to return
+    }
+
+    public ServerRequest (String albumName, String username, String collection) {//Constructor to be used with PhotoAlbumActivity class
+        this.albumName = albumName;
+        this.username = username;
+        this.collection = collection;
+    }
+
+    //Push new photo album parameters
+    public String pushNewAlbum() {
+        String status = "";
+
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
+
+        try {
+            // Construct the URL object
+            URL url = new URL(UrlcreateAlbum + "?name=" + albumName + "&username=" + username + "&collection=" + collection);
+
+            // Create the request
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            status = readStream(in);
+
+        } catch (IOException e) {
+            Log.e("PlaceholderFragment", "Error ", e);
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return status;
     }
 
     //Push registration parameters to DB, returns status string
