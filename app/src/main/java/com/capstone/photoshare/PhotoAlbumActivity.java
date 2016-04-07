@@ -60,8 +60,7 @@ public class PhotoAlbumActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
 
-                    //Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
-                    Intent intent = new Intent(PhotoAlbumActivity.this, TestOutput.class);//Temp testing for now
+                    Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
 
                     try {
                         String collection = jsonArray.getJSONObject(position).getString("collection");
@@ -116,7 +115,7 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void createAnotherAlbum(View view) {
+    public void createAlbum(View view) {
         showAddALbumDialog();
     }
 
@@ -126,10 +125,6 @@ public class PhotoAlbumActivity extends AppCompatActivity {
 
     private String createCollectionName(String name) {
         return name.replace(' ', '_');
-    }
-
-    public void createFirstAlbum(View view) {
-        showAddALbumDialog();
     }
 
     private class userAlbums extends AsyncTask<Void, Void, JSONArray> {

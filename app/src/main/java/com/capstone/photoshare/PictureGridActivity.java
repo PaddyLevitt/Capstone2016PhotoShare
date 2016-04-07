@@ -37,6 +37,10 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
         Intent intent = getIntent();
         picCollection = intent.getStringExtra("collection");
 
+        loadGrid();
+    }
+
+    private void loadGrid() {
         getPicFromUrl pic = new getPicFromUrl();
         pic.execute();
 
@@ -65,6 +69,16 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
                 }
             }
         });
+    }
+
+    public void loadPicture(View view) {
+        //Load picture code to go here
+
+        //This is for testing button only, currently sending size of picture array to test class
+        String message = Integer.toString(drawable.length);
+        Intent intent = new Intent(PictureGridActivity.this, TestOutput.class);
+        intent.putExtra("message", message);
+        startActivity(intent);
     }
 
     //Class creates and returns array of drawable objects from URLs in a collection
@@ -102,6 +116,11 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
                 }
             }
             return pics;
+        }
+
+        protected void onPostExecute(Drawable[] drawable) {
+            if (drawable.length == 0)
+                setContentView(R.layout.empty_album);
         }
     }
 }

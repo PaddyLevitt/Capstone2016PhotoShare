@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="401dp"
-        android:text="No albums to view yet, let&apos;s create one!"
+        android:text="No photos to view yet, let&apos;s load one!"
         android:gravity="center"
         android:visibility="visible"
         android:textSize="50dp"
@@ -17,9 +17,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CREATE ALBUM"
-        android:id="@+id/createFirstAlbum"
+        android:text="LOAD PICTURE"
+        android:id="@+id/loadFirstPicture"
         android:layout_gravity="center_horizontal"
-        android:onClick="createAlbum" />
+        android:onClick="loadPicture" />
 
 </LinearLayout>
