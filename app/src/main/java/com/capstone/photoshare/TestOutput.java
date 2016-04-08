@@ -22,9 +22,10 @@ public class TestOutput extends AppCompatActivity implements UrlRoutes{//Class j
         setContentView(R.layout.activity_test_output);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("message");
+        String album = intent.getStringExtra("album");
+
 
         TextView textView = (TextView) findViewById(R.id.testOutput);
-        textView.setText(message);
+        textView.setText(album);
     }
 }

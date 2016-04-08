@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,20 +28,27 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     private Drawable[] drawable;
     private JSONArray jsonArray;
     private String picCollection;
+    private String album;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_picture_grid);
 
-        //Grabs username from calling activity
+        //Grabs info from calling activity
         Intent intent = getIntent();
-        picCollection = intent.getStringExtra("collection");
+        picCollection = intent.getStringExtra(PhotoAlbumActivity.COLLECTION);
+        album = intent.getStringExtra(PhotoAlbumActivity.ALBUM);
+        username = intent.getStringExtra(PhotoAlbumActivity.USERNAME);
 
         loadGrid();
     }
 
     private void loadGrid() {
+        setContentView(R.layout.activity_picture_grid);
+        TextView textView = (TextView) findViewById(R.id.userPics);
+        textView.setText(username + ", " + album);
+
         getPicFromUrl pic = new getPicFromUrl();
         pic.execute();
 
@@ -74,10 +82,8 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     public void loadPicture(View view) {
         //Load picture code to go here
 
-        //This is for testing button only, currently sending size of picture array to test class
-        String message = Integer.toString(drawable.length);
         Intent intent = new Intent(PictureGridActivity.this, TestOutput.class);
-        intent.putExtra("message", message);
+        intent.putExtra("album", album);
         startActivity(intent);
     }
 

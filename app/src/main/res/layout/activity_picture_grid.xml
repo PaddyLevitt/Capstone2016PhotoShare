@@ -10,7 +10,9 @@
         android:id="@+id/userPics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Yah pictures..."/>
+        android:text="Yah pictures..."
+        android:textColor="#2b08d9"
+        android:textSize="20dp" />
 
     <GridView
         android:id="@+id/gridview"

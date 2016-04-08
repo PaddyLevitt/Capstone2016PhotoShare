@@ -23,6 +23,9 @@ import BackEnd.ServerRequest;
 import BackEnd.WarningDialog;
 
 public class PhotoAlbumActivity extends AppCompatActivity {
+    public final static String COLLECTION = "com.capstone.photoshare_1";
+    public final static String USERNAME = "com.capstone.photoshare_2";
+    public final static String ALBUM = "com.capstone.photoshare_3";
     private String albumCollection;
     private JSONArray jsonArray;
     private String newAlbumName;
@@ -34,7 +37,7 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra("username");
+        username = intent.getStringExtra(ProfileActivity.USERNAME);
         albumCollection = username + "Albums";
 
         loadAdapter();
@@ -64,7 +67,10 @@ public class PhotoAlbumActivity extends AppCompatActivity {
 
                     try {
                         String collection = jsonArray.getJSONObject(position).getString("collection");
-                        intent.putExtra("collection", collection);
+                        String album = jsonArray.getJSONObject(position).getString("name");
+                        intent.putExtra(COLLECTION, collection);
+                        intent.putExtra(ALBUM, album);
+                        intent.putExtra(USERNAME, username);
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();

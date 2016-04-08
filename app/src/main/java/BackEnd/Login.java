@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides easy use of threads as to not interrupt main UI thread
-
+    public final static String JSONSTRING = "com.capstone.photoshare.JASONSTRING";
     private String userName;
     private String password;
     private ProgressBar progressBar;
@@ -48,7 +48,7 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
             }
             else {//Launches profile screen if login works and passes JSON object string to ProfileActivity
                 Intent intent = new Intent(context, ProfileActivity.class);
-                intent.putExtra("JSONString", this.get());
+                intent.putExtra(JSONSTRING, this.get());
                 context.startActivity(intent);
                 loginSuccess = true;
             }

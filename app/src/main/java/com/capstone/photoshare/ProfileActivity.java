@@ -12,10 +12,11 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import BackEnd.Login;
 import BackEnd.UrlRoutes;
 
 public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
+    public final static String USERNAME = "com.capstone.photoshare";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
 
         //Passes user profile string from loginResults function called in main activity
         Intent intent = getIntent();
-        String jsonstr = intent.getStringExtra("JSONString");
+        String jsonstr = intent.getStringExtra(Login.JSONSTRING);
 
         try {//JSON object parameters displayed on profile screen
             JSONObject user = new JSONObject(jsonstr);
@@ -47,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
     public void showPhotos(View view) {
         TextView textView = (TextView) findViewById(R.id.profileScreenUserName);
         Intent intent = new Intent(this, PhotoAlbumActivity.class);
-        intent.putExtra("username", textView.getText());
+        intent.putExtra(USERNAME, textView.getText());
         startActivity(intent);
     }
 }
