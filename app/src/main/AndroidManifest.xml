@@ -41,7 +41,8 @@
         <activity android:name=".ShowPictureActivity" />
         <activity android:name=".PictureGridActivity" />
         <activity android:name=".TestOutput" />
-        <activity android:name=".PhotoAlbumActivity"></activity>
+        <activity android:name=".PhotoAlbumActivity" />
+        <activity android:name=".FriendsListActivity"></activity>
     </application>
 
 </manifest>

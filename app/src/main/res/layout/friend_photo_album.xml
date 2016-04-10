@@ -19,13 +19,4 @@
         android:id="@+id/albumListView"
         android:layout_gravity="left|top"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CREATE ALBUM"
-        android:id="@+id/createAnotherAlbum"
-        android:layout_gravity="center_horizontal"
-        android:onClick="createAlbum" />
-
 </LinearLayout>

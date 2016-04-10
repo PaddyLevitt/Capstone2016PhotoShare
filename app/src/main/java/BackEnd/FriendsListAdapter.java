@@ -14,36 +14,35 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 /**
- * Created by Lee K. Mills on 2/28/2016.
- * This class represents the adapter that will load a user's photo albums in a listview
+ * Created by Lee Mills on 4/9/2016.
+ * This class represents the adapter that will load a user's Friend list in a listview
  */
-
-public class PhotoAlbumAdapter extends BaseAdapter {
+public class FriendsListAdapter extends BaseAdapter {
     private Context mContext;
     private JSONArray jsonArray;
-    private Drawable[] albums;
+    private Drawable[] friends;
     private LayoutInflater layoutInflater;
 
     //Constructor
     @SuppressWarnings("deprecation")
-    public PhotoAlbumAdapter(Context c, JSONArray jsonArray) {
+    public FriendsListAdapter(Context c, JSONArray jsonArray) {
         mContext = c;
         this.jsonArray = jsonArray;
-        albums = new Drawable[jsonArray.length()];
+        friends = new Drawable[jsonArray.length()];
         for(int i = 0; i < jsonArray.length(); i++)
-            albums[i] = mContext.getResources().getDrawable(R.drawable.albumcover);
+            friends[i] = mContext.getResources().getDrawable(R.drawable.friend);
 
         layoutInflater = LayoutInflater.from(mContext);
     }
 
     //Returns the length of the list
     public int getCount() {
-        return albums.length;
+        return friends.length;
     }
 
     //Returns the object at specified position
     public Object getItem(int position) {
-        return albums[position];
+        return friends[position];
     }
 
     //Returns ItemId at specified postion
@@ -57,31 +56,30 @@ public class PhotoAlbumAdapter extends BaseAdapter {
         View list;
 
         if (convertView == null) {
-            list = layoutInflater.inflate(R.layout.albumicon_albumname, null);
+            list = layoutInflater.inflate(R.layout.friendicon_friendname, null);
         } else
             list = convertView;
 
         if (Build.VERSION.SDK_INT >= 16) {
-            ImageView imageView = (ImageView) list.findViewById(R.id.albumCover);
-            imageView.setBackgroundDrawable(albums[position]);
-            TextView textView = (TextView) list.findViewById(R.id.albumName);
+            ImageView imageView = (ImageView) list.findViewById(R.id.friendIcon);
+            imageView.setBackgroundDrawable(friends[position]);
+            TextView textView = (TextView) list.findViewById(R.id.friendName);
             try {
-                textView.setText(jsonArray.getJSONObject(position).getString("name"));
+                textView.setText(jsonArray.getJSONObject(position).getString("username"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         else {
-            ImageView imageView = (ImageView) list.findViewById(R.id.albumCover);
-            imageView.setBackgroundDrawable(albums[position]);
-            TextView textView = (TextView) list.findViewById(R.id.albumName);
+            ImageView imageView = (ImageView) list.findViewById(R.id.friendIcon);
+            imageView.setBackgroundDrawable(friends[position]);
+            TextView textView = (TextView) list.findViewById(R.id.friendName);
             try {
-                textView.setText(jsonArray.getJSONObject(position).getString("name"));
+                textView.setText(jsonArray.getJSONObject(position).getString("username"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return list;
     }
-
 }

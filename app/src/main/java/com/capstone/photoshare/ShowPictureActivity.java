@@ -12,6 +12,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/* Created by Lee K. Mills.
+ * This class represents a full screen picture
+ */
+
 public class ShowPictureActivity extends AppCompatActivity {
 
     //ImageView and drawable objects

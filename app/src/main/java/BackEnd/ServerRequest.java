@@ -25,24 +25,27 @@ public class ServerRequest implements UrlRoutes{
     private String collection;
     private String albumName;
 
-
-    public ServerRequest(String username, String password) {//Constructor to be used with login class
+    //Constructor to be used with login class
+    public ServerRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public ServerRequest(String name,  String username, String password, String email) {//Constructor to be used with register class
+    //Constructor to be used with register class
+    public ServerRequest(String name,  String username, String password, String email) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public ServerRequest (String collection) {//Constructor to be used with PictureGridActivity class
-        this.collection = collection; //This will be the name of the collection to return
+    //Constructor to be used with primarily with PictureGridActivity class, may be used for any collection name passing
+    public ServerRequest (String collection) {
+        this.collection = collection;
     }
 
-    public ServerRequest (String albumName, String username, String collection) {//Constructor to be used with PhotoAlbumActivity class
+    //Constructor to be used with PhotoAlbumActivity class
+    public ServerRequest (String albumName, String username, String collection) {
         this.albumName = albumName;
         this.username = username;
         this.collection = collection;
@@ -110,7 +113,7 @@ public class ServerRequest implements UrlRoutes{
         return status;
     }
 
-    //Login returns error or requested JSON object
+    //Login returns error or string representation of requested JSON object
     public String getLoginJSON() {
         String request = "";
 

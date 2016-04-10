@@ -1,9 +1,5 @@
 package com.capstone.photoshare;
 
-/* Created by Lee K. Mills.
- * This class represents the user photo albums listview
- */
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,12 +11,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.concurrent.ExecutionException;
 import BackEnd.PhotoAlbumAdapter;
 import BackEnd.ServerRequest;
 import BackEnd.WarningDialog;
+
+/* Created by Lee K. Mills.
+ * This class represents the Photo album collection screen
+ */
 
 public class PhotoAlbumActivity extends AppCompatActivity {
     public final static String COLLECTION = "com.capstone.photoshare_1";
@@ -31,20 +32,37 @@ public class PhotoAlbumActivity extends AppCompatActivity {
     private String newAlbumName;
     private String username;
     private String collection;
+    private int origin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra(ProfileActivity.USERNAME);
+        origin = intent.getFlags();//Gets flag from intent that represents if the intent came for ProfileActivity (1) or FriendListActivity (2)
+
+        if (origin == 1)
+            username = intent.getStringExtra(ProfileActivity.USERNAME);
+
+        if (origin == 2)
+            username = intent.getStringExtra(FriendsListActivity.USERNAME);
+
         albumCollection = username + "Albums";
 
         loadAdapter();
     }
 
+    //Sets the adapter to be used with the photo album list
     private void loadAdapter() {
-        setContentView(R.layout.activity_photo_album);
+        if (origin == 1)
+            setContentView(R.layout.activity_photo_album);
+
+        if (origin == 2)
+            setContentView(R.layout.friend_photo_album);
+
+        TextView textView = (TextView)findViewById(R.id.userAlbums);
+        textView.setText(username + "'s Album Collection");
+
         userAlbums albums = new userAlbums();
         albums.execute();
 
@@ -54,7 +72,7 @@ public class PhotoAlbumActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (!jsonArray.isNull(0)) {
+        if (!jsonArray.isNull(0)) {//If collection exists
             ListView listView = (ListView) findViewById(R.id.albumListView);
             listView.setAdapter(new PhotoAlbumAdapter(this, jsonArray));
 
@@ -64,6 +82,8 @@ public class PhotoAlbumActivity extends AppCompatActivity {
                                         int position, long id) {
 
                     Intent intent = new Intent(PhotoAlbumActivity.this, PictureGridActivity.class);
+                    if(origin == 1) intent.addFlags(1);//If this activity was called from ProfileActivity
+                    if(origin == 2) intent.addFlags(2);//If this activity was called from FriendListActivity
 
                     try {
                         String collection = jsonArray.getJSONObject(position).getString("collection");
@@ -80,6 +100,7 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         }
     }
 
+    //Dialog for adding a new Photo album
     protected void showAddALbumDialog() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(PhotoAlbumActivity.this);
@@ -121,18 +142,22 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         alert.show();
     }
 
+    //Create album button event
     public void createAlbum(View view) {
         showAddALbumDialog();
     }
 
+    //Formats string of new album name to handle spaces when sent in URL route
     private String formatNewAlbumName(String name) {
         return name.replace(' ', '+');
     }
 
+    //Formats string of new album name to create a collection name in MongoDB
     private String createCollectionName(String name) {
         return name.replace(' ', '_');
     }
 
+    //Private class to return collection of the user's photo album list
     private class userAlbums extends AsyncTask<Void, Void, JSONArray> {
         private JSONArray jsonArray;
 
@@ -145,12 +170,16 @@ public class PhotoAlbumActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray.isNull(0))
+        protected void onPostExecute(JSONArray jsonArray) {//If collection does not exist
+            if (jsonArray.isNull(0) && origin == 1)
                 setContentView(R.layout.blank_album_list);
+
+            if (jsonArray.isNull(0) && origin == 2)
+                setContentView(R.layout.friend_empty_album);
         }
     }
 
+    //Private class to push new album to applicable collection
     private class addAlbum extends AsyncTask<Void, Void, String> {
 
         protected String doInBackground(Void... params) {

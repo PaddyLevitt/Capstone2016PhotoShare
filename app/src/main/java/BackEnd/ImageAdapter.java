@@ -14,7 +14,7 @@ import com.capstone.photoshare.R;
 
 /**
  * Created by Lee K. Mills on 2/28/2016.
- * This class shows user picture thumbnails in a gridview
+ * This class represents the adapter that will load a user's photo album collection in a gridview
  */
 
 public class ImageAdapter extends BaseAdapter {
@@ -22,25 +22,29 @@ public class ImageAdapter extends BaseAdapter {
     private Drawable[] pics;
     private LayoutInflater layoutInflater;
 
+    //Constructor
     public ImageAdapter(Context c, Drawable[] d) {
         mContext = c;
         pics = d;
         layoutInflater = LayoutInflater.from(mContext);
     }
 
+    //Returns the length of the list
     public int getCount() {
         return pics.length;
     }
 
+    //Returns the object at specified position
     public Object getItem(int position) {
         return pics[position];
     }
 
+    //Returns ItemId at specified postion
     public long getItemId(int position) {
         return position;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    //Returns the view to populate each list position
     @SuppressWarnings("deprecation")
     public View getView(int position, View convertView, ViewGroup parent) {
         View grid;

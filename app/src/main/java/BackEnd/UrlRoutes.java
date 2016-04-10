@@ -2,7 +2,7 @@ package BackEnd;
 
 /**
  * Created by Lee Mills on 2/13/2016.
- * Interface for listing UrlRoutes
+ * Interface for listing UrlRoutes that route to Node.js framework scripts
  */
 public interface UrlRoutes {
 

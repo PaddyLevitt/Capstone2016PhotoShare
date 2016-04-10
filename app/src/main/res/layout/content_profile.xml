@@ -110,6 +110,7 @@
         android:singleLine="true"
         android:layout_below="@+id/button2"
         android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignStart="@+id/button"
+        android:onClick="showFriends" />
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ public class Registration extends AsyncTask<Void, Void, String> {
     private String confirmPassword;
     private String emailAddress;
 
+    //Constructor
     public Registration(String name, String username, String password, String confirmPassword, String emailAddress) {
         this.name = name;
         this.username = username;
@@ -26,7 +27,7 @@ public class Registration extends AsyncTask<Void, Void, String> {
         this.emailAddress = emailAddress;
     }
 
-    //Returns register attempt results
+    //Attempts to push registration to DB and returns results
     protected String doInBackground(Void... params) {
 
         ServerRequest serverRequest = new ServerRequest(name, username, password, emailAddress);
@@ -53,7 +54,7 @@ public class Registration extends AsyncTask<Void, Void, String> {
         return password.length() < passwordLength;
     }
 
-    //Checks if name and username fields are empty or null
+    //Checks if name and username fields are empty
     private boolean fullFields () {
         return name.equals("") || username.equals("");
     }

@@ -13,19 +13,20 @@ import java.util.concurrent.ExecutionException;
  * This class is designed to handle login parameters on a background thread.
  */
 
-public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides easy use of threads as to not interrupt main UI thread
+public class Login extends AsyncTask<Void, Void, String> {
     public final static String JSONSTRING = "com.capstone.photoshare.JASONSTRING";
     private String userName;
     private String password;
     private ProgressBar progressBar;
 
+    //Constructor
     public Login(String userName, String password, ProgressBar progressBar) {
         this.userName = userName;
         this.password = password;
         this.progressBar = progressBar;
     }
 
-    //Method returns string from a JSON object in the background thread
+    //Method executes on background thread and returns a string representation of a JSON object
     protected String doInBackground(Void... params) {
         ServerRequest serverRequest = new ServerRequest(userName, password);
         return serverRequest.getLoginJSON();
@@ -41,7 +42,7 @@ public class Login extends AsyncTask<Void, Void, String> { //AsyncTask provides 
         boolean loginSuccess = false;
 
         try {
-            if (this.get() == null || this.get().equals("error")) {//error string is returned from Node.js function
+            if (this.get() == null || this.get().equals("error")) {//"error" string is returned from Node.js function
                 String warning = "The user name or password you entered is incorrect!!";
                 new WarningDialog(context, warning);
                 progressBar.setVisibility(View.INVISIBLE);

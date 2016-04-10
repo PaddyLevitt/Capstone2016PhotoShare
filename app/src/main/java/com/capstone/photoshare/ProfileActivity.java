@@ -1,9 +1,5 @@
 package com.capstone.photoshare;
 
-/* Created by Lee K. Mills.
- * This class represents the user profile screen
- */
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +10,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import BackEnd.Login;
 import BackEnd.UrlRoutes;
+
+/* Created by Lee K. Mills.
+ * This class represents the user profile screen
+ */
 
 public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
     public final static String USERNAME = "com.capstone.photoshare";
@@ -48,6 +48,15 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
     public void showPhotos(View view) {
         TextView textView = (TextView) findViewById(R.id.profileScreenUserName);
         Intent intent = new Intent(this, PhotoAlbumActivity.class);
+        intent.addFlags(1);//Flag added to specify this intent versus the intent created in the FriendsListActivity class
+        intent.putExtra(USERNAME, textView.getText());
+        startActivity(intent);
+    }
+
+    //Passes username to FriendsListActivity
+    public void showFriends(View view) {
+        TextView textView = (TextView) findViewById(R.id.profileScreenUserName);
+        Intent intent = new Intent(this, FriendsListActivity.class);
         intent.putExtra(USERNAME, textView.getText());
         startActivity(intent);
     }

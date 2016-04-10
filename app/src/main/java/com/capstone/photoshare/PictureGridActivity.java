@@ -1,9 +1,5 @@
 package com.capstone.photoshare;
 
-/* Created by Lee K. Mills.
- * This class represents the user picture gridview
- */
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -24,12 +20,17 @@ import BackEnd.ImageAdapter;
 import BackEnd.ServerRequest;
 import BackEnd.UrlRoutes;
 
+/* Created by Lee K. Mills.
+ * This class represents the picture grid screen
+ */
+
 public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     private Drawable[] drawable;
     private JSONArray jsonArray;
     private String picCollection;
     private String album;
     private String username;
+    private int origin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
 
         //Grabs info from calling activity
         Intent intent = getIntent();
+        origin = intent.getFlags();//Gets flag from intent that represents if user is viewing own pictures or friends pictures
+
         picCollection = intent.getStringExtra(PhotoAlbumActivity.COLLECTION);
         album = intent.getStringExtra(PhotoAlbumActivity.ALBUM);
         username = intent.getStringExtra(PhotoAlbumActivity.USERNAME);
@@ -44,8 +47,14 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
         loadGrid();
     }
 
+    //Sets the adapter to be used with the picture grid
     private void loadGrid() {
-        setContentView(R.layout.activity_picture_grid);
+        if(origin == 1)
+            setContentView(R.layout.activity_picture_grid);
+
+        if(origin == 2)
+            setContentView(R.layout.friend_picture_grid);
+
         TextView textView = (TextView) findViewById(R.id.userPics);
         textView.setText(username + ", " + album);
 
@@ -79,11 +88,10 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
         });
     }
 
+    //Load picture button event
     public void loadPicture(View view) {
-        //Load picture code to go here
-
         Intent intent = new Intent(PictureGridActivity.this, TestOutput.class);
-        intent.putExtra("album", album);
+        intent.putExtra("message", "This will be a load picture function");
         startActivity(intent);
     }
 
@@ -125,7 +133,7 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
         }
 
         protected void onPostExecute(Drawable[] drawable) {
-            if (drawable.length == 0)
+            if (drawable.length == 0)//If collection does not exist
                 setContentView(R.layout.empty_album);
         }
     }

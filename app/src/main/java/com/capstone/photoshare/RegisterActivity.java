@@ -1,9 +1,5 @@
 package com.capstone.photoshare;
 
-/* Created by Lee K. Mills.
- * This class represents the registration screen
- */
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.concurrent.ExecutionException;
 import BackEnd.Registration;
+
+/* Created by Lee K. Mills.
+ * This class represents the registration screen
+ */
 
 public class RegisterActivity extends AppCompatActivity {
     private String name;

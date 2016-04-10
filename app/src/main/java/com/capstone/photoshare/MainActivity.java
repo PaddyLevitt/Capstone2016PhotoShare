@@ -1,9 +1,5 @@
 package com.capstone.photoshare;
 
-/* Created by Lee K. Mills.
- * This class represents the initial login screen
- */
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +9,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import BackEnd.Login;
 import BackEnd.WarningDialog;
+
+/* Created by Lee K. Mills.
+ * This class represents the initial login screen
+ */
 
 public class MainActivity extends AppCompatActivity {
 
