@@ -221,7 +221,7 @@ public class ServerRequest implements UrlRoutes{
 
         try {
             // Construct the URL object
-            URL url = new URL(UrlfindUser + "?email=" + collection);//collection parameter represents email for this method
+            URL url = new URL(UrlfindUser + "?email=" + email);
 
             // Create the request
             urlConnection = (HttpURLConnection) url.openConnection();
