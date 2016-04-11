@@ -13,4 +13,6 @@ public interface UrlRoutes {
     String UrlPic = "http://" + myIP + ":8080/users/picToApp";
     String Urlcollection = "http://" + myIP + ":8080/collection";
     String UrlcreateAlbum = "http://" + myIP + ":8080/users/createAlbum";
+    String UrlfindUser = "http://" + myIP + ":8080/users/findUser";
+    String UrladdFriend = "http://" + myIP + ":8080/users/addFriend";
 }

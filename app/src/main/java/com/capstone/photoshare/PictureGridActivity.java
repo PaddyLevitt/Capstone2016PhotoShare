@@ -132,9 +132,12 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
             return pics;
         }
 
-        protected void onPostExecute(Drawable[] drawable) {
-            if (drawable.length == 0)//If collection does not exist
+        protected void onPostExecute(Drawable[] drawable) {//If collection does not exist
+            if (drawable.length == 0 && origin == 1)
                 setContentView(R.layout.empty_album);
+
+            if (drawable.length == 0 && origin == 2)
+                setContentView(R.layout.empty_friend_album);
         }
     }
 }

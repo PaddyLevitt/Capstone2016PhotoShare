@@ -24,11 +24,13 @@ public class ServerRequest implements UrlRoutes{
     private String email;
     private String collection;
     private String albumName;
+    private String friendUserName;
 
-    //Constructor to be used with login class
-    public ServerRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
+    //Constructor to be used with login class and FriendsListActivity class
+    public ServerRequest(String param1, String param2) {
+        this.username = param1;
+        this.password = param2;
+        this.friendUserName = param2;
     }
 
     //Constructor to be used with register class
@@ -39,9 +41,10 @@ public class ServerRequest implements UrlRoutes{
         this.email = email;
     }
 
-    //Constructor to be used with primarily with PictureGridActivity class, may be used for any collection name passing
-    public ServerRequest (String collection) {
-        this.collection = collection;
+    //Constructor to be used with PictureGridActivity class and FriendsListActivity class
+    public ServerRequest (String param) {
+        this.collection = param;
+        this.email = param;
     }
 
     //Constructor to be used with PhotoAlbumActivity class
@@ -50,6 +53,7 @@ public class ServerRequest implements UrlRoutes{
         this.username = username;
         this.collection = collection;
     }
+
 
     //Push new photo album parameters
     public String pushNewAlbum() {
@@ -62,6 +66,37 @@ public class ServerRequest implements UrlRoutes{
         try {
             // Construct the URL object
             URL url = new URL(UrlcreateAlbum + "?name=" + albumName + "&username=" + username + "&collection=" + collection);
+
+            // Create the request
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            status = readStream(in);
+
+        } catch (IOException e) {
+            Log.e("PlaceholderFragment", "Error ", e);
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return status;
+    }
+
+    //Push new friend to friend list
+    public String pushNewFriend() {
+        String status = "";
+
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
+
+        try {
+            // Construct the URL object
+            URL url = new URL(UrladdFriend + "?username=" + username + "&friendName=" + friendUserName);
 
             // Create the request
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -174,6 +209,37 @@ public class ServerRequest implements UrlRoutes{
             }
         }
         return coll;
+    }
+
+    //Returns string result of searching for a user by email address
+    public String findUserByEmail() {
+        String result = "";
+
+        //Url connection and input stream objects
+        HttpURLConnection  urlConnection = null;
+        InputStream in;
+
+        try {
+            // Construct the URL object
+            URL url = new URL(UrlfindUser + "?email=" + collection);//collection parameter represents email for this method
+
+            // Create the request
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            //Construct and pass input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            result = readStream(in);
+
+        } catch (IOException e) {
+            Log.e("PlaceholderFragment", "Error ", e);
+        } finally{
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return result;
     }
 
     //Converts inputStream to a string
