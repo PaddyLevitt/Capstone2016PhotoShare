@@ -82,7 +82,8 @@
         android:id="@+id/button"
         android:layout_marginTop="24dp"
         android:layout_below="@+id/profileScreenEmail"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="editProfile" />
 
     <Button
         android:layout_width="wrap_content"

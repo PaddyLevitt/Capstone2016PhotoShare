@@ -13,6 +13,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +24,7 @@
         <activity
             android:name=".RegisterActivity"
             android:label="Back"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -32,17 +34,22 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.capstone.photoshare.MainActivity" />
         </activity>
-        <activity android:name=".ShowPictureActivity" />
-        <activity android:name=".PictureGridActivity" />
+        <activity android:name=".ShowPictureActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".PictureGridActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".TestOutput" />
-        <activity android:name=".PhotoAlbumActivity" />
-        <activity android:name=".FriendsListActivity"></activity>
+        <activity android:name=".PhotoAlbumActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".FriendsListActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

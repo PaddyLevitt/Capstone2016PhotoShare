@@ -91,7 +91,7 @@ public class PictureGridActivity extends AppCompatActivity implements UrlRoutes{
     //Load picture button event
     public void loadPicture(View view) {
         Intent intent = new Intent(PictureGridActivity.this, TestOutput.class);
-        intent.putExtra("message", "This will be a load picture function");
+        intent.putExtra("message", "This feature is coming soon.");
         startActivity(intent);
     }
 

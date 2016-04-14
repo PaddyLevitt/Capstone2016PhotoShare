@@ -44,6 +44,12 @@ public class ProfileActivity extends AppCompatActivity implements UrlRoutes{
         }
     }
 
+    public void editProfile(View view) {
+        Intent intent = new Intent(this, TestOutput.class);
+        intent.putExtra("message", "This feature is coming soon.");
+        startActivity(intent);
+    }
+
     //Passes username to PictureGridActivity
     public void showPhotos(View view) {
         TextView textView = (TextView) findViewById(R.id.profileScreenUserName);
